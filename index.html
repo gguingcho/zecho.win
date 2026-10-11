@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제초</title>
+<title>제초의 방</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@500&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap">
 <style>
@@ -356,7 +356,7 @@ footer {
     <button class="profile" id="profileBtn" type="button" aria-expanded="false" aria-controls="intro">
       <span class="avatar">
         <span class="ring"></span>
-        <!-- 000.jpg -->
+        <!-- 프사 주소를 src에 넣어주세요 -->
         <img id="profileImg" src="" alt="제초 프로필 사진">
         <svg class="bow" viewBox="0 0 60 34" aria-hidden="true">
           <path d="M30 14 C22 2 8 2 8 11 C8 19 22 18 30 14Z"/>
@@ -375,7 +375,6 @@ footer {
     <article class="intro glass" id="intro" hidden>
       <p class="en">about me</p>
       <dl>
-        <div><dt>활동</dt><dd>블룸 · 네오나 · 멜로이</dd></div>
         <div><dt>장르</dt><dd>로맨스, 일상, 판타지</dd></div>
         <div><dt>좋아하는</dt><dd>여기에 적어주세요</dd></div>
         <div><dt>문의</dt><dd>여기에 적어주세요</dd></div>
@@ -390,21 +389,19 @@ footer {
       <em>my characters</em>
       <h2>제작한 캐챗</h2>
     </div>
-    <div class="filters glass" id="filters"></div>
   </div>
   <section class="chats" id="chats"></section>
 
-  <footer>made by kkuing</footer>
+  <footer>made by jecho</footer>
 </div>
 
 <script>
 /* 캐챗 목록 — 여기만 고치면 카드가 바뀌어요
-   img: 이미지 주소 / link: 채팅 링크 / platform: 필터 버튼에 그대로 쓰여요 */
+   img: 이미지 주소 / link: 채팅 링크 */
 const CHATS = [
   {
     name: "캐릭터 이름 1",
     line: "한 줄 소개를 적어주세요",
-    platform: "Bloom",
     tags: ["로맨스", "일상"],
     img: "",
     link: "#"
@@ -412,7 +409,6 @@ const CHATS = [
   {
     name: "캐릭터 이름 2",
     line: "한 줄 소개를 적어주세요",
-    platform: "Neona",
     tags: ["판타지"],
     img: "",
     link: "#"
@@ -420,7 +416,6 @@ const CHATS = [
   {
     name: "캐릭터 이름 3",
     line: "한 줄 소개를 적어주세요",
-    platform: "Meloy",
     tags: ["학원"],
     img: "",
     link: "#"
@@ -428,7 +423,6 @@ const CHATS = [
   {
     name: "캐릭터 이름 4",
     line: "한 줄 소개를 적어주세요",
-    platform: "Bloom",
     tags: ["로맨스"],
     img: "",
     link: "#"
@@ -440,7 +434,7 @@ const pImg = document.getElementById("profileImg");
 if (!pImg.getAttribute("src")) {
   const ph = document.createElement("span");
   ph.className = "noimg";
-  ph.textContent = "꾸잉";
+  ph.textContent = "제초";
   pImg.replaceWith(ph);
 }
 
@@ -460,11 +454,9 @@ btn.addEventListener("click", () => {
 /* 카드 + 필터 */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const list = document.getElementById("chats");
-const filters = document.getElementById("filters");
 
-function render(pf) {
-  const items = pf === "All" ? CHATS : CHATS.filter(c => c.platform === pf);
-  list.innerHTML = items.map(c => `
+function render() {
+  list.innerHTML = CHATS.map(c => `
     <a class="card glass" href="${esc(c.link)}" target="_blank" rel="noopener">
       <div class="pic">
         ${c.img
@@ -472,7 +464,6 @@ function render(pf) {
           : `<div class="noimg">${esc(c.name.charAt(0))}</div>`}
       </div>
       <div class="meta">
-        <span class="platform">${esc(c.platform)}</span>
         <h3 class="name">${esc(c.name)}</h3>
         <p class="line">${esc(c.line)}</p>
         <p class="tags">${c.tags.map(t => "#" + esc(t)).join(" ")}</p>
@@ -480,18 +471,7 @@ function render(pf) {
     </a>`).join("");
 }
 
-const platforms = ["All", ...new Set(CHATS.map(c => c.platform))];
-filters.innerHTML = platforms.map((p, i) =>
-  `<button type="button" class="${i === 0 ? "on" : ""}" data-p="${esc(p)}">${esc(p)}</button>`
-).join("");
-filters.addEventListener("click", e => {
-  const b = e.target.closest("button");
-  if (!b) return;
-  filters.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
-  render(b.dataset.p);
-});
-
-render("All");
+render();
 </script>
 </body>
 </html>
