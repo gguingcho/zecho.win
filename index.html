@@ -3,21 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제초의 방</title>
+<title>zecho</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Comfortaa:wght@500;700&display=swap">
 <style>
-/* 레이아웃: 하늘색 사선 배경 위 캐럿(Carrd)풍 액자 페이지
-   — 캔디 스트라이프 배너 + 프사 → 클릭 시 옆에 About me → 메뉴 버튼 → 차양 → 캐챗 카드 → 리본 구분선 → 하단 바 */
+/* 레이아웃: 파스텔 하늘 위에 떠 있는 '브라우저 창' 두 개
+   ① my page 창 — 주소창 + 왼쪽 프사·링크 버튼 / 오른쪽 인사→(프사 클릭)→자기소개
+   ② my chats 창 — 캐챗 카드
+   여러 톤의 핑크를 섞어서 씀 */
 :root {
   color-scheme: light;
-  --sky: #cfe9f7;        /* 바깥 하늘색 */
-  --sky-deep: #9fd0ec;   /* 하늘색 포인트 */
-  --pink: #f7b9cb;       /* 메인 핑크 */
-  --pink-deep: #ec8fab;  /* 진한 핑크 */
-  --pink-soft: #fde8ef;  /* 연핑크 면 */
+  --cream: #fff7f9;       /* 창 안쪽 바탕 */
+  --blush: #ffe4ec;       /* 아주 연한 핑크 */
+  --peach: #ffc9cf;       /* 피치 핑크 */
+  --lilac: #f6cfe8;       /* 라일락 핑크 */
+  --rose: #ff8fb1;        /* 로즈 핑크 */
+  --hot: #f45b8f;         /* 진한 핫핑크 (포인트) */
+  --berry: #b8466f;       /* 베리 (글자 강조) */
+  --ink: #8d5b6e;         /* 본문 글자 */
   --white: #ffffff;
-  --ink: #8a6a76;        /* 본문 글자 */
 
   --font-ko: "Gowun Dodum", "Noto Sans CJK KR", "Apple SD Gothic Neo", sans-serif;
   --font-en: "Comfortaa", "Gowun Dodum", "Noto Sans CJK KR", sans-serif;
@@ -27,117 +31,162 @@
 
 body {
   margin: 0;
-  background-color: #eef7fc;
-  background-image: repeating-linear-gradient(
-    135deg, transparent 0 22px, rgba(159, 208, 236, .28) 22px 34px
-  );
+  /* 핑크 → 라일락 → 피치로 번지는 하늘 + 흰 별가루 */
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,.9) 1.5px, transparent 2px) 0 0 / 46px 46px,
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.7) 1px, transparent 1.5px) 0 0 / 30px 30px,
+    linear-gradient(170deg, #ffd6e4 0%, #f8d6f0 45%, #ffe1d9 100%);
   color: var(--ink);
   font-family: var(--font-ko);
   font-size: 13.5px;
   line-height: 1.7;
+  min-height: 100vh;
 }
 
 .wrap {
-  max-width: 720px;
+  max-width: 740px;
   margin: 0 auto;
   padding-inline: 16px;
-  padding-block: 40px 40px;
+  padding-block: 44px 36px;
+  display: grid;
+  gap: 34px;
 }
 
-/* ───────── 바깥 액자 ───────── */
-.page {
-  background: var(--white);
-  border: 10px solid var(--sky);
-  border-radius: 26px;
-  padding: 10px;
-  box-shadow: 0 10px 30px rgba(159, 208, 236, .35);
-}
+/* ───────── 창 공통 ───────── */
+.window { position: relative; }
 
-/* 위아래 레이스 띠 */
-.lace {
-  height: 30px;
-  border-radius: 10px;
-  background:
-    radial-gradient(circle at 8px 100%, var(--white) 5px, transparent 5.5px) 0 0 / 16px 8px repeat-x,
-    var(--pink);
-  position: relative;
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 6px 16px 4px 18px;
+  border-radius: 14px 14px 0 0;
+  background: var(--lilac);
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--berry);
 }
-.lace::after {
-  content: "";
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 10px;
-  border-top: 2px dashed var(--white);
+.tab b {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--hot);
 }
-.lace.bottom {
-  background:
-    radial-gradient(circle at 8px 0, var(--white) 5px, transparent 5.5px) 0 100% / 16px 8px repeat-x,
-    var(--pink);
-}
+.window.chats-win .tab { background: var(--peach); }
 
-.inner {
-  margin-block: 10px;
-  border: 3px solid var(--pink-soft);
-  border-radius: 14px;
+.frame {
+  background: var(--cream);
+  border: 2px solid var(--white);
+  border-radius: 0 20px 20px 20px;
+  box-shadow: 0 0 0 5px var(--lilac), 0 16px 34px rgba(184, 70, 111, .18);
   overflow: hidden;
 }
+.window.chats-win .frame { box-shadow: 0 0 0 5px var(--peach), 0 16px 34px rgba(184, 70, 111, .18); }
 
-/* ───────── 배너 + 프사 + 소개 ───────── */
-.banner {
-  position: relative;
-  height: 110px;
-  background: repeating-linear-gradient(
-    90deg, var(--pink-soft) 0 18px, var(--white) 18px 36px
-  );
-  border-bottom: 3px solid var(--pink-soft);
-}
-.banner .spark {
-  position: absolute;
-  fill: var(--sky-deep);
-}
-.banner .s1 { width: 22px; top: 22px; left: 46%; }
-.banner .s2 { width: 14px; top: 58px; left: 62%; fill: var(--pink-deep); }
-.banner .s3 { width: 18px; top: 18px; right: 12%; }
-.banner .bow {
-  position: absolute;
-  right: 22px;
-  bottom: 14px;
-  width: 54px;
-  fill: var(--pink);
-}
-
-.top {
+/* 툴바 */
+.toolbar {
   display: flex;
-  gap: 22px;
-  padding: 0 22px 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, var(--white), var(--blush));
+  border-bottom: 2px solid var(--white);
+}
+.toolbar .dots { display: flex; gap: 6px; }
+.toolbar .dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.toolbar .dots i:nth-child(1) { background: var(--hot); }
+.toolbar .dots i:nth-child(2) { background: var(--peach); }
+.toolbar .dots i:nth-child(3) { background: var(--lilac); }
+.toolbar .arrows {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--rose);
+  letter-spacing: 6px;
+}
+.address {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: inset 0 0 0 1.5px var(--blush);
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: var(--berry);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.address svg { width: 16px; flex: 0 0 auto; fill: var(--rose); }
+
+/* 창 안쪽 도트 */
+.body {
+  background-color: var(--cream);
+  background-image: radial-gradient(var(--blush) 2px, transparent 2.5px);
+  background-size: 22px 22px;
+}
+
+/* ───────── ① my page ───────── */
+.page-body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 26px;
+  padding: 26px 26px 24px;
+  align-items: start;
+}
+
+.left {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
 }
 
 .profile {
-  flex: 0 0 auto;
-  margin-top: -78px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
   background: none;
   border: 0;
   padding: 0;
   cursor: pointer;
   font: inherit;
   color: inherit;
-  position: relative;
-  z-index: 1;
 }
 .avatar {
-  width: 150px;
-  height: 150px;
+  position: relative;
+  display: block;
+  width: 156px;
+  height: 156px;
+  transition: transform .3s ease;
+}
+/* 프사 뒤 물결 테두리 */
+.avatar::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--peach) 0 15deg, var(--lilac) 15deg 30deg);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%);
+          mask: radial-gradient(circle, transparent 62%, #000 63%);
+}
+.avatar .photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 5px solid var(--white);
-  box-shadow: 0 0 0 3px var(--pink), 0 8px 18px rgba(236, 143, 171, .25);
   overflow: hidden;
-  background: var(--pink-soft);
-  transition: transform .3s ease;
+  background: var(--blush);
 }
 .avatar img {
   width: 100%;
@@ -146,167 +195,227 @@ body {
   object-position: center;
   display: block;
 }
-.profile:hover .avatar { transform: rotate(-3deg) scale(1.03); }
+.avatar .bow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 50px;
+  transform: translateX(-50%) rotate(-6deg);
+  fill: var(--hot);
+  filter: drop-shadow(0 2px 0 var(--white));
+}
+.avatar .sticker {
+  position: absolute;
+  right: -10px;
+  bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--white);
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--hot);
+  box-shadow: 0 3px 8px rgba(244, 91, 143, .25);
+  transform: rotate(8deg);
+}
+.profile:hover .avatar { transform: scale(1.03) rotate(-2deg); }
 .profile:focus-visible { outline: none; }
-.profile:focus-visible .avatar { box-shadow: 0 0 0 4px var(--pink-deep); }
+.profile:focus-visible .photo { border-color: var(--hot); }
 
 .tap {
   font-family: var(--font-en);
   font-size: 11px;
   font-weight: 700;
-  color: var(--sky-deep);
-  border: 2px dashed var(--sky);
-  border-radius: 999px;
-  padding: 1px 12px;
-  background: var(--white);
+  color: var(--berry);
 }
 
-.side {
-  flex: 1;
+/* 링크 버튼 — 세로로 쌓기 */
+.links {
+  width: 100%;
+  display: grid;
+  gap: 7px;
+}
+.links a {
+  display: block;
+  text-align: center;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--berry);
+  text-decoration: none;
+  background: linear-gradient(180deg, var(--white) 0%, var(--blush) 100%);
+  box-shadow: inset 0 0 0 1.5px var(--white), 0 3px 0 var(--peach);
+  transition: transform .2s, box-shadow .2s;
+}
+.links a:nth-child(2) { box-shadow: inset 0 0 0 1.5px var(--white), 0 3px 0 var(--lilac); }
+.links a:nth-child(3) { box-shadow: inset 0 0 0 1.5px var(--white), 0 3px 0 var(--rose); }
+.links a::after { content: " ♡"; color: var(--hot); }
+.links a:hover { transform: translateY(-2px); }
+.links a:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+
+/* 오른쪽 */
+.right {
   min-width: 0;
-  padding-top: 14px;
+  padding-top: 4px;
 }
-
-.title-en {
+.logo {
   margin: 0;
   font-family: var(--font-en);
-  font-size: 19px;
+  font-size: 30px;
   font-weight: 700;
-  color: var(--sky-deep);
-  line-height: 1.4;
+  line-height: 1.2;
+  color: var(--white);
+  -webkit-text-stroke: 1.5px var(--hot);
+  paint-order: stroke fill;
+  text-shadow: 3px 3px 0 var(--peach);
 }
-.title-en small {
-  font-size: 13px;
-  color: var(--pink-deep);
-}
-
-.greet .name {
-  margin: 2px 0 0;
-  font-size: 26px;
-  color: var(--pink-deep);
-  line-height: 1.3;
-}
-.greet p {
-  margin: 4px 0 0;
-  font-size: 13px;
-}
-
-.intro { animation: pop .45s ease; }
-.intro dl {
-  margin: 8px 0 0;
-  display: grid;
-}
-.intro dl div {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 8px;
-  padding-block: 4px;
-  border-bottom: 1px dashed var(--pink);
-}
-.intro dt {
-  font-size: 12px;
-  color: var(--pink-deep);
-}
-.intro dt::before { content: "✦ "; color: var(--sky-deep); }
-.intro dd { margin: 0; }
-.intro .msg {
-  margin: 10px 0 0;
-  padding: 6px 12px;
-  border-radius: 10px;
-  background: var(--pink-soft);
-  font-size: 12.5px;
-  color: var(--pink-deep);
-  white-space: pre-line; /* 코드에서 엔터 친 그대로 줄바꿈 */
-}
-
-/* ───────── 메뉴 버튼 ───────── */
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 16px;
-  background: repeating-linear-gradient(
-    90deg, var(--white) 0 18px, #fdf3f6 18px 36px
-  );
-  border-block: 3px solid var(--pink-soft);
-}
-.nav a {
-  flex: 0 0 auto;
-  min-width: 84px;
-  text-align: center;
+.logo-sub {
+  margin: 6px 0 0;
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: var(--lilac);
   font-family: var(--font-en);
   font-size: 11px;
   font-weight: 700;
-  line-height: 1.6;
-  color: var(--pink-deep);
-  text-decoration: none;
-  padding: 2px 12px;
-  border: 1.5px dashed var(--sky-deep);
-  border-radius: 999px;
+  color: var(--berry);
+}
+
+.greet p {
+  margin: 16px 0 0;
+}
+.greet .hl { color: var(--hot); }
+
+.intro { animation: pop .45s ease; }
+.intro h2 {
+  margin: 0;
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--hot);
+  background: linear-gradient(transparent 60%, var(--blush) 60%);
+  padding-inline: 2px;
+}
+.intro dl {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 6px;
+}
+.intro dl div {
+  display: grid;
+  grid-template-columns: 66px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.intro dt {
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--white);
+  background: var(--rose);
+}
+.intro dl div:nth-child(2) dt { background: var(--hot); }
+.intro dl div:nth-child(3) dt { background: #ffa6c1; }
+.intro dd { margin: 0; color: var(--berry); }
+.intro .msg {
+  margin: 14px 0 0;
+  padding: 8px 12px;
+  border-radius: 12px;
   background: var(--white);
-  transition: background .2s;
-}
-.nav a:hover { background: var(--pink-soft); }
-.nav a:focus-visible { outline: 2px solid var(--pink-deep); outline-offset: 2px; }
-
-/* 차양 */
-.awning {
-  height: 26px;
-  background:
-    radial-gradient(circle at 18px 0, var(--pink) 17px, transparent 17.5px) 0 0 / 72px 26px repeat-x,
-    radial-gradient(circle at 54px 0, var(--pink-soft) 17px, transparent 17.5px) 0 0 / 72px 26px repeat-x;
+  border: 1.5px dashed var(--peach);
+  font-size: 12.5px;
+  white-space: pre-line; /* 코드에서 엔터 친 그대로 줄바꿈 */
 }
 
-/* ───────── 캐챗 ───────── */
-.chats-wrap {
-  padding: 14px 22px 22px;
-  background-color: var(--white);
-  background-image: radial-gradient(var(--pink-soft) 1.6px, transparent 2px);
-  background-size: 18px 18px;
-}
-
-.sec-title {
+/* 하단 바 */
+.foot {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 14px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--pink-soft);
+  gap: 10px;
+  padding: 9px 18px;
+  background: linear-gradient(90deg, var(--blush), #fbe3f3, #ffe6e1);
+  border-top: 2px solid var(--white);
+  font-family: var(--font-en);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--berry);
 }
-.sec-title .title-en { font-size: 16px; }
-.sec-title span {
-  font-size: 13px;
-  color: var(--pink-deep);
+.foot .play {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: var(--hot);
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--berry);
 }
+.foot .play svg { width: 11px; height: 11px; fill: var(--white); }
+.foot .play:focus-visible { outline: 2px solid var(--berry); outline-offset: 2px; }
+.foot .song {
+  min-width: 0;
+  max-width: 45%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.foot .track {
+  flex: 1;
+  min-width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--white);
+  overflow: hidden;
+  cursor: pointer;
+}
+.foot .track i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--hot);
+  border-radius: 999px;
+}
+.foot .time { color: var(--rose); font-variant-numeric: tabular-nums; }
+
+/* ───────── ② my chats ───────── */
+.chats-body { padding: 22px 22px 24px; }
 
 .chats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   background: var(--white);
-  border: 2px solid var(--pink);
-  border-radius: 12px;
-  padding: 6px;
+  border-radius: 16px;
+  padding: 7px;
   text-decoration: none;
   color: inherit;
+  box-shadow: 0 4px 0 var(--peach);
   transition: transform .25s ease;
 }
-.card:hover { transform: translateY(-4px) rotate(-1deg); }
-.card:focus-visible { outline: 3px solid var(--sky-deep); outline-offset: 2px; }
+.card:nth-child(3n+2) { box-shadow: 0 4px 0 var(--lilac); }
+.card:nth-child(3n) { box-shadow: 0 4px 0 var(--rose); }
+.card:hover { transform: translateY(-4px); }
+.card:focus-visible { outline: 3px solid var(--hot); outline-offset: 2px; }
 
 .card .pic {
+  position: relative;
   aspect-ratio: 1 / 1;
   max-width: 100%;
-  border: 2px solid var(--sky);
-  border-radius: 8px;
+  border-radius: 11px;
   overflow: hidden;
-  background: var(--pink-soft);
+  background: var(--blush);
 }
 .card .pic img {
   width: 100%;
@@ -321,11 +430,23 @@ body {
   display: grid;
   place-items: center;
   font-size: 28px;
-  color: var(--pink);
+  color: var(--rose);
+}
+.card .num {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .92);
+  font-family: var(--font-en);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--hot);
 }
 
 .card .meta {
-  padding: 8px 4px 2px;
+  padding: 9px 4px 3px;
   display: grid;
   gap: 1px;
 }
@@ -333,7 +454,7 @@ body {
   margin: 0;
   font-size: 14.5px;
   font-weight: 400;
-  color: var(--pink-deep);
+  color: var(--berry);
   line-height: 1.4;
 }
 .card .line {
@@ -346,57 +467,24 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-top: 5px;
+  margin-top: 6px;
 }
 .card .tags span {
   font-size: 11px;
   padding: 0 8px;
   border-radius: 999px;
-  background: #eaf5fc;
-  color: var(--sky-deep);
+  background: var(--blush);
+  color: var(--hot);
 }
-
-/* 리본 구분선 */
-.ribbon-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 16px 6px;
-}
-.ribbon-line i {
-  width: 22px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--pink);
-}
-.ribbon-line svg { width: 34px; fill: var(--pink-deep); }
-
-/* 하단 바 */
-.bar {
-  margin: 10px 22px 18px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  border: 2px solid #eaf5fc;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-family: var(--font-en);
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--pink);
-}
-.bar b { color: var(--pink-deep); }
-.bar .gap { flex: 1; }
-.bar .made { color: var(--sky-deep); }
+.card .tags span:nth-child(2) { background: #ffd9e5; color: var(--hot); }
+.card .tags span:nth-child(3) { background: #ffeef4; color: var(--rose); }
 
 .outside {
-  margin-top: 18px;
+  margin: 0;
   text-align: center;
   font-family: var(--font-en);
   font-size: 12px;
-  color: var(--sky-deep);
+  color: var(--berry);
 }
 
 @keyframes pop {
@@ -405,115 +493,123 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .intro { animation: none; }
-  .card, .avatar { transition: none; }
+  .card, .avatar, .links a { transition: none; }
 }
 
 /* ───────── 모바일 ───────── */
 @media (max-width: 600px) {
-  .page { border-width: 7px; padding: 7px; }
-  .top { flex-direction: column; align-items: center; gap: 10px; padding: 0 16px 18px; }
-  .side { width: 100%; padding-top: 0; }
-  .greet { text-align: center; }
-  .avatar { width: 128px; height: 128px; }
-  .profile { margin-top: -66px; }
-  .nav { gap: 8px; }
-  .chats-wrap { padding: 12px 14px 18px; }
-  .chats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .bar { margin-inline: 14px; }
+  .wrap { gap: 28px; padding-block: 32px 30px; }
+  .toolbar .arrows { display: none; }
+  .page-body { grid-template-columns: 1fr; gap: 22px; padding: 26px 18px 20px; justify-items: center; }
+  .left { display: contents; }          /* 폰: 프사 → 소개 → 링크 순서 */
+  .profile { order: 1; }
+  .right { order: 2; width: 100%; }
+  .links { order: 3; max-width: 240px; }
+  .right { text-align: center; }
+  .intro { text-align: left; }
+  .chats-body { padding: 16px 14px 20px; }
+  .chats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="page">
-    <div class="lace"></div>
 
-    <div class="inner">
-
-      <!-- ① 배너 -->
-      <div class="banner" aria-hidden="true">
-        <svg class="spark s1" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
-        <svg class="spark s2" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
-        <svg class="spark s3" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
-        <svg class="bow" viewBox="0 0 60 36"><path d="M30 16C22 2 4 2 6 14 8 26 22 24 30 16ZM30 16C38 2 56 2 54 14 52 26 38 24 30 16ZM27 18 20 35 26 32 29 35ZM33 18 40 35 34 32 31 35Z"/><circle cx="30" cy="16" r="5"/></svg>
+  <!-- ① my page 창 -->
+  <section class="window">
+    <div class="tab">my page <b>x</b></div>
+    <div class="frame">
+      <div class="toolbar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="arrows" aria-hidden="true">← → ↻</span>
+        <div class="address">
+          <span>zecho.win</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2.3 4 6.3 4c2.2 0 3.7 1.3 4.7 2.8C12 5.3 13.5 4 15.7 4c4 0 5.9 4.4 4.3 7.7C19.5 16.4 12 21 12 21z"/></svg>
+        </div>
       </div>
 
-      <!-- ② 프사 + 소개 -->
-      <section class="top" id="home">
-        <button class="profile" id="profileBtn" type="button" aria-expanded="false" aria-controls="intro">
-          <span class="avatar">
-            <!-- 프사 -->
-            <img id="profileImg" src="000.jpg" alt="제초 프로필 사진">
-          </span>
-          <span class="tap" id="hint">tap me ♡</span>
-        </button>
+      <div class="body page-body">
+        <!-- 왼쪽: 프사 + 링크 -->
+        <div class="left">
+          <button class="profile" id="profileBtn" type="button" aria-expanded="false" aria-controls="intro">
+            <span class="avatar">
+              <span class="photo">
+                <!-- 프사 -->
+                <img id="profileImg" src="000.jpg" alt="제초 프로필 사진">
+              </span>
+              <svg class="bow" viewBox="0 0 60 36" aria-hidden="true"><path d="M30 16C22 2 4 2 6 14 8 26 22 24 30 16ZM30 16C38 2 56 2 54 14 52 26 38 24 30 16ZM27 18 20 35 26 32 29 35ZM33 18 40 35 34 32 31 35Z"/><circle cx="30" cy="16" r="5"/></svg>
+              <span class="sticker">hi!</span>
+            </span>
+            <span class="tap" id="hint">✦ tap me ✦</span>
+          </button>
 
-        <div class="side">
+          <!-- 링크는 href="" 안에 넣으면 돼요 (비워두면 눌러도 아무 일 없음) -->
+          <nav class="links">
+            <a href="https://x.com/zech0o" target="_blank" rel="noopener">Twitter</a>
+            <a href="" target="_blank" rel="noopener">오픈채팅</a>
+            <a href="" target="_blank" rel="noopener">Discord</a>
+          </nav>
+        </div>
+
+        <!-- 오른쪽 -->
+        <div class="right">
           <!-- 처음 보이는 인사 -->
           <div class="greet" id="greet">
-            <p class="title-en">hello !! <small>✦</small></p>
-            <p class="name">제초</p>
+            <p class="logo">zecho</p>
             <p>제페토 캐릭터챗 제작합니다.</p>
           </div>
 
           <!-- 프사 누르면 나오는 자기소개 -->
           <article class="intro" id="intro" hidden>
-            <p class="title-en">About me !! <small>✦</small></p>
+            <h2>About me</h2>
             <dl>
               <div><dt>닉네임</dt><dd>제초</dd></div>
               <div><dt>플랫폼</dt><dd>ZEPETO</dd></div>
               <div><dt>키워드</dt><dd>#순애 #로코 #개그</dd></div>
             </dl>
             <p class="msg">제가 올리는 모든 채팅은 제페토에서만 만나보실 수 있습니다.
-            타 플랫폼은 다른 닉네임으로 활동합니다!</p>
+타 플랫폼은 다른 닉네임으로 활동합니다!</p>
           </article>
         </div>
-      </section>
-
-      <!-- ③ 메뉴 -->
-      <!-- 링크는 href="" 안에 넣으면 돼요 (비워두면 눌러도 아무 일 없음) -->
-      <nav class="nav">
-        <a href="https://x.com/zech0o" target="_blank" rel="noopener">Twitter</a>
-        <a href="" target="_blank" rel="noopener">오픈채팅</a>
-        <a href="" target="_blank" rel="noopener">Discord</a>
-      </nav>
-
-      <div class="awning" aria-hidden="true"></div>
-
-      <!-- ④ 제작 캐챗 -->
-      <section class="chats-wrap" id="chats">
-        <div class="sec-title">
-          <p class="title-en">my chats</p>
-          <span>제작 캐챗</span>
-        </div>
-        <div class="chats" id="chatList"></div>
-
-        <div class="ribbon-line" aria-hidden="true">
-          <i></i><i></i><i></i>
-          <svg viewBox="0 0 60 36"><path d="M30 16C22 2 4 2 6 14 8 26 22 24 30 16ZM30 16C38 2 56 2 54 14 52 26 38 24 30 16ZM27 18 20 35 26 32 29 35ZM33 18 40 35 34 32 31 35Z"/><circle cx="30" cy="16" r="5"/></svg>
-          <i></i><i></i><i></i>
-        </div>
-      </section>
-
-      <!-- ⑤ 하단 바 -->
-      <div class="bar">
-        <span>♪ <b>playing :</b> zepeto chat</span>
-        <span class="gap"></span>
-        <span class="made">made by 제초</span>
       </div>
 
+      <!-- 음악: music.mp3 파일을 같은 저장소에 올리면 돼요 -->
+      <audio id="bgm" src="music.mp3" preload="metadata" loop></audio>
+      <div class="foot">
+        <button class="play" id="playBtn" type="button" aria-label="재생">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg>
+        </button>
+        <span class="song" aria-hidden="true">♪</span>
+        <span class="track" id="track"><i id="bar"></i></span>
+        <span class="time" id="time">0:00</span>
+      </div>
     </div>
+  </section>
 
-    <div class="lace bottom"></div>
-  </div>
+  <!-- ② my chats 창 -->
+  <section class="window chats-win" id="chats">
+    <div class="tab">my chats <b>x</b></div>
+    <div class="frame">
+      <div class="toolbar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="address">
+          <span>제작 캐챗</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg>
+        </div>
+      </div>
+      <div class="body chats-body">
+        <div class="chats" id="chatList"></div>
+      </div>
+    </div>
+  </section>
 
   <p class="outside">( zecho.win )</p>
 </div>
 
 <script>
 /* 캐챗 목록 — 여기만 고치면 카드가 바뀌어요
-   img: 이미지 파일 이름 / link: 채팅 링크 */
+   img: 이미지 파일 이름 / link: 채팅 링크 / 한 줄 소개 줄바꿈은 \n */
 const CHATS = [
   {
     name: "수인고등학교",
@@ -548,25 +644,54 @@ btn.addEventListener("click", () => {
   intro.hidden = !open;
   greet.hidden = open;
   btn.setAttribute("aria-expanded", open);
-  hint.textContent = open ? "close ♡" : "tap me ♡";
+  hint.textContent = open ? "✦ close ✦" : "✦ tap me ✦";
 });
 
 /* 링크 비어 있는 버튼은 눌러도 이동 안 함 */
-document.querySelectorAll(".nav a").forEach(a => {
+document.querySelectorAll(".links a").forEach(a => {
   if (!a.getAttribute("href")) {
     a.addEventListener("click", e => e.preventDefault());
     a.style.cursor = "default";
   }
 });
 
+/* 음악 재생 */
+const bgm = document.getElementById("bgm");
+const playBtn = document.getElementById("playBtn");
+const playIcon = document.getElementById("playIcon");
+const bar = document.getElementById("bar");
+const timeEl = document.getElementById("time");
+const fmt = t => isFinite(t) ? Math.floor(t / 60) + ":" + String(Math.floor(t % 60)).padStart(2, "0") : "0:00";
+const PLAY = '<path d="M6 3l15 9-15 9z"/>';
+const PAUSE = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+
+playBtn.addEventListener("click", () => {
+  if (bgm.paused) bgm.play().catch(() => {});
+  else bgm.pause();
+});
+bgm.addEventListener("play", () => { playIcon.innerHTML = PAUSE; playBtn.setAttribute("aria-label", "일시정지"); });
+bgm.addEventListener("pause", () => { playIcon.innerHTML = PLAY; playBtn.setAttribute("aria-label", "재생"); });
+bgm.addEventListener("loadedmetadata", () => { timeEl.textContent = "0:00 / " + fmt(bgm.duration); });
+bgm.addEventListener("timeupdate", () => {
+  bar.style.width = (bgm.currentTime / bgm.duration * 100 || 0) + "%";
+  timeEl.textContent = fmt(bgm.currentTime) + " / " + fmt(bgm.duration);
+});
+/* 바 누르면 그 위치로 이동 */
+document.getElementById("track").addEventListener("click", e => {
+  if (!isFinite(bgm.duration)) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  bgm.currentTime = (e.clientX - r.left) / r.width * bgm.duration;
+});
+
 /* 카드 그리기 */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-document.getElementById("chatList").innerHTML = CHATS.map(c => `
+document.getElementById("chatList").innerHTML = CHATS.map((c, i) => `
   <a class="card" href="${esc(c.link)}" target="_blank" rel="noopener">
     <div class="pic">
       ${c.img
         ? `<img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy">`
         : `<div class="noimg">♡</div>`}
+      <span class="num">no.${String(i + 1).padStart(2, "0")}</span>
     </div>
     <div class="meta">
       <h3 class="name">${esc(c.name)}</h3>
